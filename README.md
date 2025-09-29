@@ -79,4 +79,7 @@ API Endpoints
 ## Yorum (Comment) İşlemleri
 - GET	/api/comments/:postId	Belirli bir postun tüm yorumlarını listeleme	
 - POST	/api/comments	Yorum ekleme	
-- POST	/api/comments/reply	Yorum cevabı ekleme	
+- POST	/api/comments/reply	Yorum cevabı ekleme
+  
+https://drive.google.com/file/d/1IaghTl7wbml3CjylYfjppFdKZbqAHtkz/view?usp=drive_link
+  
