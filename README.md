@@ -1,16 +1,16 @@
-# Blog ###
+# Blog #
 Node.js, Express ve MongoDB kullanılarak geliştirilmiş tam fonksiyonlu bir blog uygulamasıdır. Kullanıcılar hesap oluşturabilir, blog yazıları paylaşabilir, yorum yapabilir, yazıları beğenebilir ve arama/filtreleme özellikleriyle içeriklere erişebilirler.
 
-***Özellikler
+Özellikler
 ---
 
-Kullanıcı Yönetimi:
+## Kullanıcı Yönetimi:
 
 Kayıt olma, giriş yapma, profil görüntüleme ve güncelleme.
 
 JWT ile güvenli kimlik doğrulama.
 
-Blog Yönetimi:
+## Blog Yönetimi:
 
 Blog yazısı oluşturma, güncelleme ve silme.
 
@@ -18,7 +18,7 @@ Yazılara resim yükleyebilme (form-data veya JSON).
 
 Başlık, içerik ve etiketler ile blog içeriklerini yönetme.
 
-Etkileşim:
+## Etkileşim:
 
 Yazılara yorum ekleme ve yorumlara cevap verme.
 
@@ -26,7 +26,7 @@ Yazıları beğenme ve beğeniyi kaldırma.
 
 Popülerlik ve tarih bazlı sıralama.
 
-Arama ve Filtreleme:
+## Arama ve Filtreleme:
 
 Başlık ve içerik bazlı arama.
 
@@ -44,8 +44,8 @@ Veritabanı indeksleme ve sorgu optimizasyonu.
 
 Sadece gerekli alanların çekilmesi (select ve lean).
 
-***Teknolojiler
-
+Teknolojiler
+---
 Backend: Node.js, Express.js
 
 Veritabanı: MongoDB, Mongoose
@@ -58,7 +58,7 @@ Test: Postman
 
 API Endpoints
 ---
-Kullanıcı (User) İşlemleri
+## Kullanıcı (User) İşlemleri
 -
 POST	/api/users/register	Yeni kullanıcı kaydı
 POST	/api/users/login	Kullanıcı girişi	
@@ -67,7 +67,7 @@ PUT	/api/users/profile	Profil güncelleme
 DELETE	/api/users/profile	Profil silme	
 GET	/api/users	Tüm kullanıcıları listeleme	
 
-Blog (Post) İşlemleri
+## Blog (Post) İşlemleri
 -
 
 POST	/api/posts	Blog yazısı oluşturma	
@@ -79,7 +79,7 @@ PUT	/api/posts/:postId/like	Blog yazısını beğenme / beğeniyi kaldırma
 GET	/api/posts/:postId/likes	Blog yazısının beğenilerini listeleme	
 GET	/api/posts/search	Blog yazısı arama ve filtreleme	
 
-Yorum (Comment) İşlemleri
+## Yorum (Comment) İşlemleri
 -
 GET	/api/comments/:postId	Belirli bir postun tüm yorumlarını listeleme	
 POST	/api/comments	Yorum ekleme	
