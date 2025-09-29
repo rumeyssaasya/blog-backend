@@ -59,28 +59,24 @@ Test: Postman
 API Endpoints
 ---
 ## Kullanıcı (User) İşlemleri
--
-POST	/api/users/register	Yeni kullanıcı kaydı
-POST	/api/users/login	Kullanıcı girişi	
-GET	/api/users/profile	Profil görüntüleme	
-PUT	/api/users/profile	Profil güncelleme	
-DELETE	/api/users/profile	Profil silme	
-GET	/api/users	Tüm kullanıcıları listeleme	
+- POST	/api/users/register	Yeni kullanıcı kaydı
+- POST	/api/users/login	Kullanıcı girişi	
+- GET	/api/users/profile	Profil görüntüleme	
+- PUT	/api/users/profile	Profil güncelleme	
+- DELETE	/api/users/profile	Profil silme	
+- GET	/api/users	Tüm kullanıcıları listeleme	
 
 ## Blog (Post) İşlemleri
--
-
-POST	/api/posts	Blog yazısı oluşturma	
-GET	/api/posts	Tüm blog yazılarını listeleme	
-GET	/api/posts/:id	Tek bir blog yazısı	
-PUT	/api/posts/:id	Blog yazısını güncelleme	
-DELETE	/api/posts/:id	Blog yazısını silme	
-PUT	/api/posts/:postId/like	Blog yazısını beğenme / beğeniyi kaldırma	
-GET	/api/posts/:postId/likes	Blog yazısının beğenilerini listeleme	
-GET	/api/posts/search	Blog yazısı arama ve filtreleme	
+- POST	/api/posts	Blog yazısı oluşturma	
+- GET	/api/posts	Tüm blog yazılarını listeleme	
+- GET	/api/posts/:id	Tek bir blog yazısı	
+- PUT	/api/posts/:id	Blog yazısını güncelleme	
+- DELETE	/api/posts/:id	Blog yazısını silme	
+- PUT	/api/posts/:postId/like	Blog yazısını beğenme / beğeniyi kaldırma	
+- GET	/api/posts/:postId/likes	Blog yazısının beğenilerini listeleme	
+- GET	/api/posts/search	Blog yazısı arama ve filtreleme	
 
 ## Yorum (Comment) İşlemleri
--
-GET	/api/comments/:postId	Belirli bir postun tüm yorumlarını listeleme	
-POST	/api/comments	Yorum ekleme	
-POST	/api/comments/reply	Yorum cevabı ekleme	
+- GET	/api/comments/:postId	Belirli bir postun tüm yorumlarını listeleme	
+- POST	/api/comments	Yorum ekleme	
+- POST	/api/comments/reply	Yorum cevabı ekleme	
