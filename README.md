@@ -1,4 +1,4 @@
-### Blog ###
+# Blog ###
 Node.js, Express ve MongoDB kullanılarak geliştirilmiş tam fonksiyonlu bir blog uygulamasıdır. Kullanıcılar hesap oluşturabilir, blog yazıları paylaşabilir, yorum yapabilir, yazıları beğenebilir ve arama/filtreleme özellikleriyle içeriklere erişebilirler.
 
 ***Özellikler
