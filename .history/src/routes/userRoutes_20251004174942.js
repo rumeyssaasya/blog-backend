@@ -7,9 +7,8 @@ const userController = require("../controllers/userController");
 
 
 router.get("/", userController.getAllUsers);
-router.get("/search",userController.searchUsers)
 router.get("/:id", userController.getUserProfile);
-
+router.get("/search",userController.searchUsers)
 router.put("/:id", protect, userController.uploadAvatar, userController.updateUserProfile);
 router.delete("/:id", protect, userController.deleteUserProfile);
 

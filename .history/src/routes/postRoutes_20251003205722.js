@@ -14,6 +14,7 @@ const {
 } = require("../controllers/postController");
 const uploadPost = require("../middleware/uploadPostMiddleware");
 
+// Tek post route: JSON veya form-data
 router.post("/create-post", protect, (req, res, next) => {
   const contentType = req.headers['content-type'] || '';
   if (contentType.includes("multipart/form-data")) {
@@ -22,16 +23,16 @@ router.post("/create-post", protect, (req, res, next) => {
   next();
 }, createPost);
 
-
+// Diğer route’lar
 router.get("/", getPosts);
 router.get("/search", searchPosts);
 router.get("/:id", getPostById);
 router.put("/:id", protect, (req, res, next) => {
-
+  // Eğer content-type form-data ise multer çalıştır
   if (req.is("multipart/form-data")) {
     return uploadPost.single("image")(req, res, next);
   }
-
+  // JSON ise direkt controller
   next();
 }, updatePost);
 router.delete("/:id", protect, deletePost);

@@ -2,6 +2,7 @@ const User = require("../models/User");
 const multer = require("multer");
 const fs = require("fs");
 
+// Multer setup
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/avatars");
@@ -13,7 +14,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 
-
+// GET /api/users
 exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password");
@@ -26,6 +27,7 @@ exports.getAllUsers = async (req, res) => {
   }
 };
 
+// GET /api/users/:id
 exports.getUserProfile = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).select("-password");
@@ -59,6 +61,7 @@ exports.searchUsers = async (req, res) => {
 
 
 
+// PUT /api/users/:id
 exports.updateUserProfile = async (req, res) => {
   try {
     if (req.user._id.toString() !== req.params.id) {
@@ -68,6 +71,7 @@ exports.updateUserProfile = async (req, res) => {
     const { username, email, bio } = req.body;
     const updateData = { username, email, bio };
 
+    // Avatar dosyası yüklendiyse
     if (req.file) {
       updateData.profilePic = req.file.path;
     }
@@ -84,6 +88,7 @@ exports.updateUserProfile = async (req, res) => {
   }
 };
 
+// DELETE /api/users/:id
 exports.deleteUserProfile = async (req, res) => {
   try {
     if (req.user._id.toString() !== req.params.id) {
@@ -93,6 +98,7 @@ exports.deleteUserProfile = async (req, res) => {
     const user = await User.findById(req.params.id);
     if (!user) return res.status(404).json({ message: "Kullanıcı bulunamadı" });
 
+    // Avatar varsa sil
     if (user.profilePic && fs.existsSync(user.profilePic)) {
       fs.unlinkSync(user.profilePic);
     }

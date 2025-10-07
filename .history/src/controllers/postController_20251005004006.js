@@ -1,9 +1,9 @@
 const Post = require("../models/Post");
 
-
+// Controller
 exports.createPost = async (req, res) => {
   try {
-
+    // JSON veya form-data fark etmez
     const { title, content, tags } = req.body;
 
     if (!title || !content) {
@@ -20,7 +20,7 @@ exports.createPost = async (req, res) => {
       content,
       tags: tags ? tagsArray : [],
       author: req.user._id,
-      image: req.file ? req.file.path : "", 
+      image: req.file ? req.file.path : "", // Eğer form-data ile resim geldiyse
     });
 
     await newPost.save();
@@ -33,7 +33,7 @@ exports.createPost = async (req, res) => {
 exports.getPosts = async (req, res) => {
   try {
     const posts = await Post.find()
-      .populate("author", "username email"); 
+      .populate("author", "username email"); // yazar bilgisi
 
     const userId = req.user ? req.user._id : null;
 
@@ -56,9 +56,10 @@ exports.getPosts = async (req, res) => {
   }
 };
 
+// Kullanıcıya ait postları getir
 exports.getPostsByUser = async (req, res) => {
   try {
-    const userId = req.params.userId; 
+    const userId = req.params.userId; // :userId route param
     const posts = await Post.find({ author: userId }).sort({ createdAt: -1 });
     res.status(200).json(posts);
   } catch (err) {
@@ -73,6 +74,8 @@ exports.updatePost = async (req, res) => {
 
     if (title) updateFields.title = title;
     if (content) updateFields.content = content;
+
+    // Eğer tags varsa, hem string hem array senaryosunu ele al
     if (tags) {
       if (Array.isArray(tags)) {
         updateFields.tags = tags.map(tag => tag.trim());
@@ -107,11 +110,6 @@ exports.deletePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: " Bu Post bulunamadı" });
     }
-
-    if (!post.author) {
-      return res.status(400).json({ message: "Postun yazarı bulunamadı." });
-    }
-    
     if (post.author.toString() !== req.user.id) {
       return res.status(403).json({ message: "Bu postu silemezsiniz. Post size ait değil." });
     }
@@ -134,6 +132,7 @@ exports.getPostById = async (req, res) => {
   }
 };
 
+// Post beğenme / beğeniyi kaldırma
 exports.like = async (req, res) => {
   const { postId } = req.params;
   try {
@@ -144,9 +143,9 @@ exports.like = async (req, res) => {
     const index = post.likes.indexOf(userId);
 
     if (index === -1) {
-      post.likes.push(userId); 
+      post.likes.push(userId); // beğen
     } else {
-      post.likes.splice(index, 1); 
+      post.likes.splice(index, 1); // beğeniyi kaldır
     }
 
     await post.save();
@@ -160,6 +159,7 @@ exports.like = async (req, res) => {
   }
 };
 
+//Tüm beğenileri getir
 exports.getLikes = async (req, res) => {
   const { postId } = req.params;
   try {
@@ -175,11 +175,15 @@ exports.getLikes = async (req, res) => {
   }
 };
 
+
+// GET /api/posts/search → Arama ve filtreleme
 exports.searchPosts = async (req, res) => {
   try {
     const { q, authorId, tag, startDate, endDate, sort, page, limit } = req.query;
 
     let filter = {};
+
+    // Başlığa veya içeriğe göre arama
     if (q) {
       filter.$or = [
         { title: { $regex: q, $options: "i" } },
@@ -187,32 +191,37 @@ exports.searchPosts = async (req, res) => {
       ];
     }
 
+    // Yazar filtresi
     if (authorId) filter.author = authorId;
 
+    // Etiket filtresi
     if (tag) filter.tags = tag;
 
+    // Tarih filtresi
     if (startDate || endDate) {
       filter.createdAt = {};
       if (startDate) filter.createdAt.$gte = new Date(startDate);
       if (endDate) filter.createdAt.$lte = new Date(endDate);
     }
 
-    let sortOption = { createdAt: -1 }; 
+    // Sıralama
+    let sortOption = { createdAt: -1 }; // default: en yeni
     if (sort === "oldest") sortOption = { createdAt: 1 };
     if (sort === "popular") sortOption = { likes: -1 };
     if (sort === "unpopular") sortOption = { likes: 1 };
 
+    // Pagination
     const pageNum = parseInt(page) || 1;
     const limitNum = parseInt(limit) || 10;
     const skip = (pageNum - 1) * limitNum;
 
     const posts = await Post.find(filter)
-      .select("title content tags author likes createdAt") 
-      .populate("author", "username") 
+      .select("title content tags author likes createdAt") // sadece gerekli alanlar
+      .populate("author", "username") // sadece username
       .sort(sortOption)
       .skip(skip)
       .limit(limitNum)
-      .lean(); 
+      .lean(); // lean() → hafızayı verimli kullanır
 
     res.json(posts);
   } catch (err) {
